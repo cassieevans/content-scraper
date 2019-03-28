@@ -11,27 +11,30 @@ const chalk = require('chalk');
 }
 
 async function generateMarkdown(data) {
-    const heading = `---\ntitle: ${data.name}\nthumbnail: '${data.imgSrc}'\n---\n\n`;
 
-    const md = await json2md([
-        {
-            h1: data.name
-        },
-        {
-            link: {
-                title: data.name,
-                source: data.link,
-            }
-        },
-        {
-            img: {
-                title: data.name,
-                source: data.imgSrc,
-            }
-        }
-    ]);
+    if (data) {
+        const heading = `---\ntitle: ${data.name}\nthumbnail: '${data.imgSrc}'\n---\n\n`;
 
-    return `${heading}${md}`;
+        const md = await json2md([
+            {
+                h1: data.name
+            },
+            {
+                link: {
+                    title: data.name,
+                    source: data.link,
+                }
+            },
+            {
+                img: {
+                    title: data.name,
+                    source: data.imgSrc,
+                }
+            }
+        ]);
+
+        return `${heading}${md}`;
+    }
 }
 
 async function getWigs(html) {
@@ -91,7 +94,7 @@ async function go() {
     const html = await getHtml(url);
     const data = await getWigs(html);
     const markdown = await generateMarkdown(data);
-    console.log(data);
+    console.log(chalk.green('Done!'));
 }
 
 go();
