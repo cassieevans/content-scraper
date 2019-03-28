@@ -72,6 +72,7 @@ async function getWigs(html) {
             imgSrc,
         });
 
+        // Create new markdown file and add markdown content
         const file = path.join('.', 'wig-pages', `${wigName.split(' ').join('-')}.md`);
         await fs.writeFile(file, markdown);
     }
